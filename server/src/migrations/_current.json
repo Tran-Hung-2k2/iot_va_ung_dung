@@ -1,0 +1,288 @@
+{
+    "tables": {
+        "Parkings": {
+            "tableName": "Parkings",
+            "schema": {
+                "Parking_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "Parking_ID",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Parking_Name": {
+                    "allowNull": false,
+                    "field": "Parking_Name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Address": {
+                    "field": "Address",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Number_Of_Vehicles": {
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "field": "Number_Of_Vehicles",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "Max_Space": {
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "field": "Max_Space",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "Parking_Cards": {
+            "tableName": "Parking_Cards",
+            "schema": {
+                "Card_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "Card_ID",
+                    "seqType": "Sequelize.UUID"
+                },
+                "User_ID": {
+                    "allowNull": true,
+                    "field": "User_ID",
+                    "references": {
+                        "model": "Users",
+                        "key": "User_ID"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Is_Lock": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "Is_Lock",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "Parking_Managers": {
+            "tableName": "Parking_Managers",
+            "schema": {
+                "User_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "field": "User_ID",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Users",
+                        "key": "User_ID"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "unique": "Parking_Managers_User_ID_Parking_ID_unique",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Parking_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "field": "Parking_ID",
+                    "primaryKey": true,
+                    "references": {
+                        "model": "Parkings",
+                        "key": "Parking_ID"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "unique": "Parking_Managers_User_ID_Parking_ID_unique",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Is_Managing": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "Is_Managing",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "Parking_Records": {
+            "tableName": "Parking_Records",
+            "schema": {
+                "Record_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "Record_ID",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Parking_ID": {
+                    "allowNull": false,
+                    "field": "Parking_ID",
+                    "references": {
+                        "model": "Parkings",
+                        "key": "Parking_ID"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Card_ID": {
+                    "allowNull": false,
+                    "field": "Card_ID",
+                    "references": {
+                        "model": "Parking_Cards",
+                        "key": "Card_ID"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.UUID"
+                },
+                "Record_Image": {
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "Record_Image",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Action": {
+                    "allowNull": false,
+                    "field": "Action",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "Users": {
+            "tableName": "Users",
+            "schema": {
+                "User_ID": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.UUIDV4"
+                    },
+                    "primaryKey": true,
+                    "field": "User_ID",
+                    "seqType": "Sequelize.UUID"
+                },
+                "User_Name": {
+                    "allowNull": false,
+                    "field": "User_Name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Email": {
+                    "allowNull": false,
+                    "unique": true,
+                    "field": "Email",
+                    "seqType": "Sequelize.STRING"
+                },
+                "User_Password": {
+                    "allowNull": false,
+                    "field": "User_Password",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Gender": {
+                    "field": "Gender",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Birthday": {
+                    "field": "Birthday",
+                    "seqType": "Sequelize.DATEONLY"
+                },
+                "Phone_Number": {
+                    "field": "Phone_Number",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Address": {
+                    "field": "Address",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Avatar": {
+                    "field": "Avatar",
+                    "seqType": "Sequelize.STRING"
+                },
+                "Balance": {
+                    "defaultValue": {
+                        "value": 0
+                    },
+                    "field": "Balance",
+                    "seqType": "Sequelize.INTEGER.UNSIGNED"
+                },
+                "Role": {
+                    "allowNull": false,
+                    "defaultValue": {
+                        "value": "user"
+                    },
+                    "field": "Role",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "revision": 1
+}
