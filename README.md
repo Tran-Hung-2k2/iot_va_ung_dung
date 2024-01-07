@@ -1,4 +1,12 @@
 # Cách chạy project
+# Tạo db 
+Xem cấu hình db trong config/config.son và tạo db tương ứng trong mysql, sau đó chạy các lệnh sau tại thư mục gốc của dự án
+
+npm run makemigrations
+
+npm run migrate
+
+npm run seed
 
 # Đầu tiên thực hiện mở terminal tại folder gốc của project (blog_cnweb) và thực hiện các lệnh sau
 
