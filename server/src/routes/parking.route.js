@@ -8,12 +8,16 @@ const route = express.Router();
 
 route
     .route('/')
-    .get(mdw.verify_admin, ctrl.get_all_parking)
+    .get(validate(vld.get_all_parking()), mdw.verify_all_user, ctrl.get_all_parking)
     .post(validate(vld.add_parking()), mdw.verify_admin, ctrl.add_parking);
 
 route
     .route('/:id')
-    .patch(validate(vld.update_parking()), mdw.verify_admin_and_manager, ctrl.update_parking)
-    .delete(mdw.verify_admin, ctrl.delete_parking);
+    .patch(validate(vld.update_parking()), mdw.verify_admin, ctrl.update_parking)
+    .delete(validate(vld.delete_parking()), mdw.verify_admin, ctrl.delete_parking);
+
+route
+    .route('/num_of_vehicles/:id')
+    .patch(validate(vld.update_number_of_vehicles()), mdw.verify_manager, ctrl.update_number_of_vehicles);
 
 export default route;

@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             Parking_Card.belongsTo(models.User, {
                 foreignKey: 'User_ID',
+                onDelete: 'CASCADE',
             });
 
             Parking_Card.hasMany(models.Parking_Record, {
                 foreignKey: 'Card_ID',
+                onDelete: 'CASCADE',
             });
         }
     }

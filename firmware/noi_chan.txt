@@ -1,0 +1,7 @@
+Vcc <-> 3V3 (ou Vin(5V), dependendo da versão do módulo)
+RST (Reset) <-> D22
+GND (Masse) <-> GND
+MISO (Master Input Slave Output) <-> 19
+MOSI (Master Output Slave Input) <-> 23
+SCK (Serial Clock) <-> 18
+SS/SDA (Slave select) <-> 21

@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const label = require('../constants/label');
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
@@ -11,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             User.hasMany(models.Parking_Card, {
                 foreignKey: 'User_ID',
+                onDelete: 'CASCADE',
             });
 
-            User.belongsToMany(models.Parking, {
-                through: 'Parking_Manager',
+            User.hasMany(models.Parking_Manager, {
                 foreignKey: 'User_ID',
-                otherKey: 'Parking_ID',
+                onDelete: 'CASCADE',
             });
         }
     }
@@ -28,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            User_Name: {
+            Name: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 unique: true,
             },
-            User_Password: {
+            Password: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -50,10 +51,15 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER.UNSIGNED,
                 defaultValue: 0,
             },
+            Status: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                defaultValue: label.user.ACTIVE,
+            },
             Role: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                defaultValue: 'user',
+                defaultValue: label.role.USER,
             },
         },
         {

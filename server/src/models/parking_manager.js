@@ -10,6 +10,15 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // Định nghĩa mối quan hệ ở đây
+            Parking_Manager.belongsTo(models.User, {
+                foreignKey: 'User_ID',
+                onDelete: 'CASCADE',
+            });
+
+            Parking_Manager.belongsTo(models.Parking, {
+                foreignKey: 'Parking_ID',
+                onDelete: 'CASCADE',
+            });
         }
     }
 
@@ -17,11 +26,13 @@ module.exports = (sequelize, DataTypes) => {
         {
             User_ID: {
                 type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
+                allowNull: false,
+                primaryKey: true,
             },
             Parking_ID: {
                 type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
+                allowNull: false,
+                primaryKey: true,
             },
             Is_Managing: {
                 type: DataTypes.BOOLEAN,

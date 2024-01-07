@@ -2,31 +2,24 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        const parkingManagerData = [
+        const data = [
             {
-                User_ID: 'a1234567-89ab-4cde-81gh-123456789001',
-                Parking_ID: 'b2345678-9abc-4def-gh12-345678901234',
+                User_ID: '5f3e964e-8d2e-4b6a-9462-80bbdec33ae8',
+                Parking_ID: '4f85c61a-2a20-41ff-b8ed-fbe2940d4c68',
                 Is_Managing: false,
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
             {
-                User_ID: 'a1234567-89ab-4cde-81gh-123456789001',
-                Parking_ID: 'a1234567-89ab-4cde-8fgh-123456789012',
-                Is_Managing: false,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            },
-            {
-                User_ID: 'a1234567-89ab-4cde-8fgh-123456789123',
-                Parking_ID: 'a1234567-89ab-4cde-8fgh-123456789012',
+                User_ID: '5f3e964e-8d2e-4b6a-9462-80bbdec33ae8',
+                Parking_ID: '27fe9583-6365-4046-8c3c-021c38a6b351',
                 Is_Managing: false,
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
         ];
 
-        await queryInterface.bulkInsert('Parking_Managers', parkingManagerData, {});
+        await queryInterface.bulkInsert('Parking_Managers', data, {});
 
         return Promise.resolve();
     },

@@ -9,11 +9,19 @@ const route = express.Router();
 route
     .route('/')
     .get(mdw.verify_admin, ctrl.get_all_parking_manager)
+    .get(mdw.verify_manager, ctrl.get_parking_manager_by_manager)
     .post(validate(vld.add_parking_manager()), mdw.verify_admin, ctrl.add_parking_manager);
 
 route
+    .route('/manager')
+    .get(validate(vld.get_parking_manager_by_manager()), mdw.verify_manager, ctrl.get_parking_manager_by_manager);
+
+route
+    .route('/:id')
+    .patch(validate(vld.update_parking_manager()), mdw.verify_admin_and_manager, ctrl.update_parking_manager);
+
+route
     .route('/:user_id/:parking_id')
-    .patch(validate(vld.update_parking_manager()), mdw.verify_admin_and_manager, ctrl.update_parking_manager)
-    .delete(mdw.verify_admin, ctrl.delete_parking_manager);
+    .delete(validate(vld.delete_parking_manager()), mdw.verify_admin, ctrl.delete_parking_manager);
 
 export default route;

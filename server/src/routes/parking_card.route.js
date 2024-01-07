@@ -13,12 +13,11 @@ route
 
 route
     .route('/:id')
-    .get(mdw.verify_all_user, ctrl.get_parking_card_by_id)
-    .patch(validate(vld.update_parking_card()), mdw.verify_admin, ctrl.update_parking_card)
-    .delete(mdw.verify_admin, ctrl.delete_parking_card);
+    .patch(validate(vld.update_parking_card()), mdw.verify_admin_and_user, ctrl.update_parking_card)
+    .delete(validate(vld.delete_parking_card()), mdw.verify_admin_and_user, ctrl.delete_parking_card);
 
-route
-    .route('/user/:id')
-    .get(validate(vld.get_parking_card_by_user()), mdw.verify_admin_and_user, ctrl.get_parking_card_by_user);
+route.route('/user').get(mdw.verify_user, ctrl.get_parking_card_by_user);
+
+route.route('/info').get(validate(vld.get_parking_card_info()), mdw.verify_manager, ctrl.get_parking_card_info);
 
 export default route;

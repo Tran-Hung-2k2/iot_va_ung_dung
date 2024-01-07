@@ -1,149 +1,81 @@
 import { Joi } from 'express-validation';
 import messages from '../utils/validation_message';
-import custom_validation from './custom.validation';
+import cv from './custom.validation';
+import label from '../constants/label';
 
 const validation = {
     // [POST] /api/auth/register/
     register: () => ({
         body: Joi.object({
-            User_Name: Joi.string()
-                .trim()
-                .required()
-                .label('Tên người dùng')
-                .messages({
-                    ...messages,
-                }),
-            Email: Joi.string()
-                .email()
-                .required()
-                .external(custom_validation.isNotRegistered)
-                .messages({
-                    ...messages,
-                }),
-            User_Password: Joi.string()
-                .required()
-                .label('Mật khẩu')
-                .messages({
-                    ...messages,
-                }),
-            Confirm_Password: Joi.string()
-                .required()
-                .label('Mật khẩu xác nhận')
-                .messages({
-                    ...messages,
-                }),
-            Gender: Joi.string()
-                .valid('Nam', 'Nữ', 'Khác')
-                .label('Giới tính')
-                .messages({
-                    ...messages,
-                }),
-            Birthday: Joi.date()
-                .label('Ngày sinh')
-                .messages({
-                    ...messages,
-                }),
-            Phone_Number: Joi.string()
-                .label('Số điện thoại')
-                .messages({
-                    ...messages,
-                }),
-            Address: Joi.string()
-                .label('Địa chỉ')
-                .messages({
-                    ...messages,
-                }),
+            Name: Joi.string().trim().required().label('Tên người dùng'),
+            Email: Joi.string().email().required().external(cv.isNotRegistered),
+            Password: Joi.string().required().label('Mật khẩu'),
+            Confirm_Password: Joi.string().required().label('Mật khẩu xác nhận'),
         })
             .unknown(false)
-            .custom(custom_validation.confirmPassword)
-            .messages({
-                ...messages,
-            }),
+            .custom(cv.confirmPassword)
+            .prefs({ messages }),
+    }),
+
+    // [POST] /api/auth/verify_register/
+    verify_register: () => ({
+        body: Joi.object({
+            register_token: Joi.string().required().label('Token xác thực'),
+        })
+            .unknown(false)
+            .prefs({ messages }),
     }),
 
     // [POST] /api/auth/login/
     login: () => ({
         body: Joi.object({
-            Email: Joi.string()
-                .email()
-                .required()
-                .messages({
-                    ...messages,
-                }),
-            User_Password: Joi.string()
-                .required()
-                .label('Mật khẩu')
-                .messages({
-                    ...messages,
-                }),
+            Email: Joi.string().email().required(),
+            Password: Joi.string().required().label('Mật khẩu'),
         })
             .unknown(false)
-            .messages({
-                ...messages,
-            }),
+            .prefs({ messages }),
     }),
 
     // [POST] /api/auth/change_password/
     change_password: () => ({
         body: Joi.object({
-            Email: Joi.string()
-                .email()
-                .required()
-                .messages({
-                    ...messages,
-                }),
-            Old_Password: Joi.string()
-                .required()
-                .label('Mật khẩu')
-                .messages({
-                    ...messages,
-                }),
-            User_Password: Joi.string()
-                .required()
-                .label('Mật khẩu mới')
-                .messages({
-                    ...messages,
-                }),
-            Confirm_Password: Joi.string()
-                .required()
-                .label('Mật khẩu xác nhận')
-                .messages({
-                    ...messages,
-                }),
+            Old_Password: Joi.string().required().label('Mật khẩu'),
+            Password: Joi.string().required().label('Mật khẩu mới'),
+            Confirm_Password: Joi.string().required().label('Mật khẩu xác nhận'),
         })
             .unknown(false)
-            .custom(custom_validation.confirmPassword)
-            .messages({
-                ...messages,
-            }),
+            .custom(cv.confirmPassword)
+            .prefs({ messages }),
     }),
 
     // [POST] /api/auth/forget_password/
     forget_password: () => ({
         body: Joi.object({
-            Email: Joi.string()
-                .email()
-                .required()
-                .external(custom_validation.isRegistered)
-                .messages({
-                    ...messages,
-                }),
+            Email: Joi.string().email().required().external(cv.isRegistered),
         })
             .unknown(false)
-            .messages({
-                ...messages,
-            }),
+            .prefs({ messages }),
+    }),
+
+    // [POST] /api/auth/verify_forget_password/
+    verify_forget_password: () => ({
+        body: Joi.object({
+            reset_pass_token: Joi.string().required().label('Token xác thực'),
+            Password: Joi.string().required().label('Mật khẩu mới'),
+            Confirm_Password: Joi.string().required().label('Mật khẩu xác nhận'),
+        })
+            .unknown(false)
+            .custom(cv.confirmPassword)
+            .prefs({ messages }),
     }),
 
     // [POST] /api/auth/refresh_token/
     refresh_token: () => ({
         cookies: Joi.object({
-            refresh_token: Joi.string()
-                .required()
-                .messages({
-                    ...messages,
-                }),
-        }).unknown(true),
+            refresh_token: Joi.string().required(),
+        })
+            .unknown(true)
+            .prefs({ messages }),
     }),
 };
 

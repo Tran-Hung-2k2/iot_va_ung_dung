@@ -3,13 +3,20 @@ import db from '../models/index.js';
 const validation = {
     uuidv4Id: (value, helpers) => {
         if (!value.match(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/)) {
-            return helpers.message('"{{#label}}" phải là UUIDv4');
+            return helpers.message('"{{#label}}" phải có dạng uuidv4');
+        }
+        return value;
+    },
+
+    phoneNumber: (value, helpers) => {
+        if (!value.match(/^\d{10}$/)) {
+            return helpers.message('"{{#label}}" phải là một số điện thoại hợp lệ');
         }
         return value;
     },
 
     confirmPassword: (value, helpers) => {
-        if (value.User_Password !== value.Confirm_Password)
+        if (value.Password !== value.Confirm_Password)
             return helpers.message('Mật khẩu xác nhận không khớp với Mật khẩu đã nhập');
         return value;
     },
@@ -38,17 +45,6 @@ const validation = {
         try {
             const isUser = await db.User.findByPk(value);
             if (!isUser) return helpers.message('Không tìm thấy người dùng');
-            return value;
-        } catch (error) {
-            return helpers.message(error.message);
-        }
-    },
-
-    isManager: async (value, helpers) => {
-        try {
-            const manager = await db.User.findByPk(value);
-            if (!manager || (manager.Role != 'manager' && manager.Role != 'admin'))
-                return helpers.message('Không tìm thấy người quản lý');
             return value;
         } catch (error) {
             return helpers.message(error.message);

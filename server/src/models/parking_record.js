@@ -11,9 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             Parking_Record.belongsTo(models.Parking_Card, {
                 foreignKey: 'Card_ID',
+                onDelete: 'CASCADE',
             });
-            Parking_Record.belongsTo(models.Parking,  {
+
+            Parking_Record.belongsTo(models.Parking, {
                 foreignKey: 'Parking_ID',
+                onDelete: 'CASCADE',
             });
         }
     }
@@ -33,9 +36,17 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.UUID,
                 allowNull: false,
             },
-            Record_Image: {
+            Image: {
                 type: DataTypes.STRING,
-                defaultValue: false,
+                allowNull: false,
+            },
+            Fee: {
+                type: DataTypes.INTEGER.UNSIGNED,
+                allowNull: false,
+            },
+            Balance: {
+                type: DataTypes.INTEGER.UNSIGNED,
+                allowNull: false,
             },
             Action: {
                 type: DataTypes.STRING,
